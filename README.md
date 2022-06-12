@@ -69,6 +69,16 @@ so that ENV folde will not be sent to github
     Create Folder : .github\workflow
     Under this file Create : main.yaml
 
-    This file cntent we can get it from internet and update following :
-    add trigger and trigger action in yaml file
-    -- Add Heroku EMAIL,API KEY,APP Name,Dockerfile path
+    YAML file create workflow and Create GitHub action and trigger.
+
+ 14. This file content we can get it from internet and update following :
+    
+    Create sercrets in Github for following : 
+    EMAIL
+    API KEY
+    APP NAME
+
+15. Got to Action in GitHub run BUILD.
+    It'll deploy app to Heroku16. So when every time when we commit and Push new code to Github
+    Github action will be triggered and New code will be deployed to Heroku
+    
