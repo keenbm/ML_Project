@@ -19,5 +19,56 @@ command : conda activate venv/
 
 7. Create requirement.txt file
 
-8. Install flask
+8. Install requirements in virtual env:
 pip install -r requirements.txt
+
+9. Add ENV folder in .gitignore
+so that ENV folde will not be sent to github
+
+10. git status (if files are changed and not commited then it'll will show red color text)
+                (If files are not changed or commited then it'll show green color text)
+    git add xxx (xxx = file name) (add specific file for commit)
+    git add .   (add files for commit)
+    git log (gives all version/commits history)
+    git commit -m "message" (Creates new version in local system)
+    git push origin main (Push version/change to GitHub) main = Branch name
+    git remote -v (check remote url)
+    git revert -- (for editing rolling back commit)
+
+11. Setup CI/CD pipeline
+    Info. required from Heroku
+    1. HEROKU_EMAIL = bmodi700@gmail.com
+    2. HEROKU_API_KEY= ca715e49-921a-4bd7-9838-41eb9ffcdbab
+    3. HEROKU_APP_NAME= ml-regression-demo-app
+
+ 12. For docker (to create docker image locally) (Not required for Heroku deployment) :
+    Create file named "Dockerfile" and ".dockerignore" and add following :
+    Dockerfile :
+     - Write operating system
+
+    .dockerignore : (mentioned file/folder =s to be ignored for docker):
+    i.e. /venv, .git , .gitignore
+
+    BUILD DOCKER IMAGE
+    Command : docker build -t <image_name>:<tag_name>
+
+    List docker images :
+    Command : docker images
+
+    Run docker image :
+    Command : docker -run -p 5000:5000 -e PORT=5000 <image-id>
+
+    To Check running container in docker :
+    Command : docker ps
+
+
+    To Stop docker container
+    Command : docker stop <container_id>
+
+13. For Heroku Deployment :
+    Create Folder : .github\workflow
+    Under this file Create : main.yaml
+
+    This file cntent we can get it from internet and update following :
+    add trigger and trigger action in yaml file
+    -- Add Heroku EMAIL,API KEY,APP Name,Dockerfile path
