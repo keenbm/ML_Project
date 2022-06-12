@@ -7,7 +7,7 @@ Project Demo. for End to End ML Project
 4. Locad folde in VSCode
 
 5. Created CONDA environment using Command prompt
-command : conda create -p new venv python==3.7 -y
+command : conda create -p venv python==3.7 -y
 
 
 -p : Creats python environment in project folder it self.
