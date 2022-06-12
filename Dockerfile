@@ -10,3 +10,4 @@ RUN pip install -r requirements.txt
 EXPOSE $PORT
 # add command to RUN
 CMD gunicorn --workers=4 --bind 0.0.0.0:$PORT app:app
+
