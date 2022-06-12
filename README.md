@@ -38,7 +38,7 @@ so that ENV folde will not be sent to github
 11. Setup CI/CD pipeline
     Info. required from Heroku
     1. HEROKU_EMAIL = bmodi700@gmail.com
-    2. HEROKU_API_KEY= ca715e49-921a-4bd7-9838-41eb9ffcdbab
+    2. HEROKU_API_KEY= ----
     3. HEROKU_APP_NAME= ml-regression-demo-app
 
  12. For docker (to create docker image locally) (Not required for Heroku deployment) :
