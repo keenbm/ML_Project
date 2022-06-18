@@ -81,4 +81,7 @@ so that ENV folde will not be sent to github
 15. Got to Action in GitHub run BUILD.
     It'll deploy app to Heroku16. So when every time when we commit and Push new code to Github
     Github action will be triggered and New code will be deployed to Heroku
-    
+
+16. Create Housing Folder
+    - Under Housing create __init__
+17. Create setyp.py
