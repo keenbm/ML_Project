@@ -84,4 +84,42 @@ so that ENV folde will not be sent to github
 
 16. Create Housing Folder
     - Under Housing create __init__
-17. Create setyp.py
+   
+17. Create setyp.py and Project related content
+   - after writing setup.py
+     python setup.py install or (pip install -r requirements.txt)
+     refer setup.py file comments for more details
+
+18. After initial setup , working folder will be "housing"
+
+Housing
+|-__init__.py
+|-Exception package
+|  |
+|  |-__init__.py
+|
+|-Logger package
+|  |
+|  |-__init__.py
+|
+|-pipeline package
+|  |
+|  |-__init__.py
+|
+|-component package
+|  |
+|  |-__init__.py
+|
+|-config package
+|  |
+|  |-__init__.py
+|
+|-entity package
+|  |
+|  |-__init__.py
+|_________________
+
+19. First create code for Logger module
+
+20.
+
