@@ -30,8 +30,20 @@ packages=find_packages(),
 install_requires=get_requirements_list() 
 )
 
-## packages=find_packages()-->> 
-#  get folders/package which cointains __init__.py file is available
 
 ## install_requires -->> 
-#  Get external library name from requirement.txt
+#  Get and install external library (numpy,python etc etc)  from requirement.txt
+
+## packages=find_packages()-->> 
+#  get folders/package which cointains __init__.py file
+# (to install internal custom packages i.e. housing-predictor v.0.0.1)
+
+
+## -e. ->> This will install internal custom packages (i.e. housing-predictor v.0.0.1 )
+
+## pip install -e. AND packages=find_packages() DO SAME TASK
+## if requirement.txt is directly installed (by bypassing setup.py) 
+# then -e. , should be present in requirement.txt file 
+# If we do project setup by running "python setup.py install" then we need to removr "-e."" using
+#  "requirement_file.readlines().remove("-e.")" in install_requires parameter. This will ensure that
+# we are not installing internal custom packages 2 times
