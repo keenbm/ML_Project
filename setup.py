@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 from typing import List
 
 #Declaring variables for setup functions
@@ -18,7 +18,7 @@ def get_requirements_list()->List[str]:
     of libraries mentioned in requirements.txt file
     """
     with open(REQUIREMENT_FILE_NAME) as requirement_file:
-        return requirement_file.readlines()
+        return requirement_file.readlines().remove("-e.")
 
 
 setup(
@@ -26,7 +26,12 @@ name=PROJECT_NAME,
 version=VERSION,
 author=AUTHOR,
 description=DESRCIPTION,
-packages=PACKAGES,
-install_requires=get_requirements_list()
-
+packages=find_packages(),
+install_requires=get_requirements_list() 
 )
+
+## packages=find_packages()-->> 
+#  get folders/package which cointains __init__.py file is available
+
+## install_requires -->> 
+#  Get external library name from requirement.txt
