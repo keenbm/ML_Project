@@ -501,7 +501,7 @@ def mul_var_plot(df,target_col,filename="Graph7",path="Graph7"):
 
     html_handler(input_str=f"Multivariate Analysis : Target Variable {target_col}",filename=filename,folder_name=path)
 
-    numerical_var_list=df.select_dtypes(exclude=["object"])
+    #numerical_var_list=df.select_dtypes(exclude=["object"])
     corr_df = df.corr()
     corrSale_df=pd.DataFrame(corr_df[target_col])
     corrSale_df.reset_index(inplace=True)
@@ -537,5 +537,5 @@ def mul_var_plot(df,target_col,filename="Graph7",path="Graph7"):
     except Exception as e:
         housing = HousingException(e,sys)
         logging.info(housing.error_message)
-        
+
     html_create_index(input_str="Multivariate Analysis : Target Variable",filename="Graph7",folder_name=path)
