@@ -1,6 +1,5 @@
-import os
+import dynamicplot
+import pandas as pd
 
-path="StaticPlot"
-
-if not os.path.exists(path):
-    os.makedirs(path)
+df=pd.read_csv("https://raw.githubusercontent.com/krishnaik06/Advanced-House-Price-Prediction-/master/train.csv")
+dynamicplot.PandaProfile_report(df,target_col="SalePrice",filename="Graph9",path="Graph9",minimal_ip=False)

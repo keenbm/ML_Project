@@ -4,6 +4,8 @@ from scipy import stats
 import numpy as np
 
 import plotly.express as px
+import sweetviz as sv
+import pandas_profiling as pp
 
 from datetime import datetime
 import pytz
@@ -101,8 +103,8 @@ def html_create_index(input_str,filename,folder_name):
 ## ******Categorical Vs. Numerical Target variable
 def cat_num_var_plot(df,target_col,filename="Graph1",path="Graph1"):
     """
-    Use : Create HTML Plot file for
-    Categorical Vs. Numerical Target Variable
+    Use : Create HTML Plot file for Categorical Vs. Numerical Target Variable
+    and combine it with overall EDA graph HTML
     Return : None
     """
     path=f"DynamicPlot/{path}"
@@ -175,8 +177,8 @@ def cat_num_var_plot(df,target_col,filename="Graph1",path="Graph1"):
 ## ******Numerical Vs. Numerical Target variable
 def num_num_var_plot(df,target_col,filename="Graph2",path="Graph2"):
     """
-    Use : Create HTML Plot file for
-    Numerical Vs. Numerical Target Variable
+    Use : Create HTML Plot file for Numerical Vs. Numerical Target Variable
+    and combine it with overall EDA graph HTML
     Return : None
     """
     logging.info("num_num_var_plot : Called")
@@ -235,8 +237,8 @@ def num_num_var_plot(df,target_col,filename="Graph2",path="Graph2"):
 
 def null_num_var_plot(df,target_col,filename="Graph3",path="Graph3"):
     """
-    Use : Create HTML Plot file for
-    Null Vs. Numerical Target Variable
+    Use : Create HTML Plot file for Null Vs. Numerical Target Variable
+    and combine it with overall EDA graph HTML
     Return : None
     """
     logging.info("null_num_var_plot : Called")
@@ -310,8 +312,8 @@ def null_num_var_plot(df,target_col,filename="Graph3",path="Graph3"):
 
 def cat_cat_var_plot(df,target_col,filename="Graph4",path="Graph4"):
     """
-    Use : Create HTML Plot file for
-    Categorical Vs. Categorical Target Variable
+    Use : Create HTML Plot file for Categorical Vs. Categorical Target Variable
+    and combine it with overall EDA graph HTML
     Return : None
     """
     logging.info("cat_cat_var_plot : Called")
@@ -375,8 +377,8 @@ def cat_cat_var_plot(df,target_col,filename="Graph4",path="Graph4"):
 
 def num_cat_var_plot(df,target_col,filename="Graph5",path="Graph5"):
     """
-    Use : Create HTML Plot file for
-    Numerical Vs. Categorical Target Variable
+    Use : Create HTML Plot file for Numerical Vs. Categorical Target Variable
+    and combine it with overall EDA graph HTML
     Return : None
     """
     logging.info("num_cat_var_plot : Called")
@@ -448,8 +450,8 @@ def num_cat_var_plot(df,target_col,filename="Graph5",path="Graph5"):
 ## ******Null Vs. Categorical Target variable
 def null_cat_var_plot(df,target_col,filename="Graph6",path="Graph6"):
     """
-    Use : Create HTML Plot file for
-    Null Vs. Categorical Target Variable
+    Use : Create HTML Plot file for Null Vs. Categorical Target Variable
+    and combine it with overall EDA graph HTML
     Return : None
     """
     logging.info("null_cat_var_plot : Called")
@@ -494,8 +496,8 @@ def null_cat_var_plot(df,target_col,filename="Graph6",path="Graph6"):
 
 def mul_var_plot(df,target_col,filename="Graph7",path="Graph7"):
     """
-    Use : Create HTML Plot file for
-    Multivariate Analysis
+    Use : Create HTML Plot file for Multivariate Analysis
+    and combine it with overall EDA graph HTML
     Return : None
     """
     logging.info("mul_var_plot : Called")
@@ -544,3 +546,58 @@ def mul_var_plot(df,target_col,filename="Graph7",path="Graph7"):
         logging.info(housing.error_message)
 
     html_create_index(input_str="Multivariate Analysis : Target Variable",filename="Graph7",folder_name=path)
+
+
+##*****************************************************************************************  
+## ************************* SWEETVIZ and PANDAS PROFILING ********************************
+
+def SweetViz_report(df,target_col,filename="Graph8",path="Graph8"):
+    """
+    Use : Create HTML plot using SweetViz
+    and combine it with overall EDA graph HTML
+    Return : None
+    """
+    logging.info("SweetViz_report : Called")
+
+    path=f"DynamicPlot/{path}"
+    if not os.path.exists(path):
+        os.makedirs(path) 
+    
+    try:
+        logging.info("Creating SweetViz Report")
+        logging.info("Creating SweetViz Report")
+        my_report=sv.analyze(df,target_feat=target_col,feat_cfg=None)
+        my_report.show_html(f"{path}/{filename}.html",open_browser=False)
+        html_create_index(input_str="SweetViz Report",filename=filename,folder_name=path)
+        #feature_config = sv.FeatureConfig(skip="", force_text=[""])
+        #Compare Two DataFrame i.e. e.g. Test vs Training sets
+        #my_report = sv.compare()
+        # Comparing two subsets of the same dataframe (i.e. Male vs Female)
+        #  my_report = sv.compare_intra()
+    except Exception as e:
+        housing = HousingException(e,sys)
+        logging.info(housing.error_message)
+
+
+def PandaProfile_report(df,target_col,filename="Graph9",path="Graph9",minimal_ip=False):
+    """
+    Use : Create HTML plot using PandaProfiling
+    and combine it with overall EDA graph HTML
+    Return : None
+    For Big data turn --> minimal_ip=True
+    """
+    logging.info("PandaProfiling_report : Called")
+
+    path=f"DynamicPlot/{path}"
+    if not os.path.exists(path):
+        os.makedirs(path) 
+    
+    try:
+        logging.info("Creating PandaProfiling Report")
+        profile = pp.ProfileReport(df,title="PandaProfiling Report",explorative=True,minimal=minimal_ip)
+        # minimal=True -->> For Big Dataset
+        profile.to_file(f"{path}/{filename}.html")
+        html_create_index(input_str="PandaProfiling Report",filename=filename,folder_name=path)
+    except Exception as e:
+        housing = HousingException(e,sys)
+        logging.info(housing.error_message)
