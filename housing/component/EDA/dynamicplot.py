@@ -2,9 +2,8 @@ import pandas as pd
 import numpy as np
 from scipy import stats 
 import numpy as np
-import plotly
+
 import plotly.express as px
-import plotly.io as pio
 
 from datetime import datetime
 import pytz
@@ -111,9 +110,9 @@ def cat_num_var_plot(df,target_col,filename="Graph1",path="Graph1"):
     if not os.path.exists(path):
         os.makedirs(path) 
 
-    categorical_var_list=df.select_dtypes(include=["object"])
 
     try:
+        categorical_var_list=df.select_dtypes(include=["object"])
         for column in categorical_var_list:
             html_handler(input_str=column,filename=column,folder_name=path)
             inp_df=df.groupby(column)[target_col].agg(['mean','median','count']).reset_index().rename(columns={'mean': f'Mean : {target_col}','median':f'Median : {target_col}','count':f'{column} : Count'})
@@ -184,9 +183,10 @@ def num_num_var_plot(df,target_col,filename="Graph2",path="Graph2"):
     path=f"DynamicPlot/{path}"
     if not os.path.exists(path):
         os.makedirs(path) 
-        numerical_var_list=df.select_dtypes(exclude=["object"])
+        
 
     try:
+        numerical_var_list=df.select_dtypes(exclude=["object"])
         for column in numerical_var_list:
             html_handler(input_str=column,filename=column,folder_name=path) 
             
@@ -244,11 +244,13 @@ def null_num_var_plot(df,target_col,filename="Graph3",path="Graph3"):
     if not os.path.exists(path):
         os.makedirs(path)
 
-    null_var_list=df.columns[df.isnull().any()].tolist()
-    null_var_list.append(target_col)
-    null_df=df[null_var_list]
+    
 
     try:
+        null_var_list=df.columns[df.isnull().any()].tolist()
+        null_var_list.append(target_col)
+        null_df=df[null_var_list]
+
         for column in null_df.iloc[:,:-1]:
             
             html_handler(input_str=column,filename=column,folder_name=path)
@@ -316,9 +318,9 @@ def cat_cat_var_plot(df,target_col,filename="Graph4",path="Graph4"):
     path=f"DynamicPlot/{path}"
     if not os.path.exists(path):
         os.makedirs(path) 
-    categorical_var_list=df.select_dtypes(include=["object"])
-
+    
     try:
+        categorical_var_list=df.select_dtypes(include=["object"])
         for column in categorical_var_list:
             html_handler(input_str=column,filename=column,folder_name=path)
             inp_df=df.groupby(column)[target_col].count().reset_index(name=f'{column} : Count')
@@ -383,9 +385,10 @@ def num_cat_var_plot(df,target_col,filename="Graph5",path="Graph5"):
     
     if not os.path.exists(path):
         os.makedirs(path) 
-    numerical_var_list=df.select_dtypes(exclude=["object"])
+    
 
     try:
+        numerical_var_list=df.select_dtypes(exclude=["object"])
         for column in numerical_var_list:
             
             html_handler(input_str=column,filename=column,folder_name=path)
@@ -456,10 +459,11 @@ def null_cat_var_plot(df,target_col,filename="Graph6",path="Graph6"):
     if not os.path.exists(path):
         os.makedirs(path)
 
-    null_var_list=df.columns[df.isnull().any()].tolist()
-    null_var_list.append(target_col)
-    null_df=df[null_var_list]
     try:
+        null_var_list=df.columns[df.isnull().any()].tolist()
+        null_var_list.append(target_col)
+        null_df=df[null_var_list]
+
         for column in null_df.iloc[:,:-1]:
             
             html_handler(input_str=column,filename=column,folder_name=path)
@@ -501,15 +505,16 @@ def mul_var_plot(df,target_col,filename="Graph7",path="Graph7"):
 
     html_handler(input_str=f"Multivariate Analysis : Target Variable {target_col}",filename=filename,folder_name=path)
 
-    #numerical_var_list=df.select_dtypes(exclude=["object"])
-    corr_df = df.corr()
-    corrSale_df=pd.DataFrame(corr_df[target_col])
-    corrSale_df.reset_index(inplace=True)
-    corrSale_df.sort_values(by=target_col,ascending=True,inplace=True)
-    corrSale_df.dropna(inplace=True)
-    corrSale_df.columns=["Feature","Pearson_Corr"]
+    
 
     try:
+        #numerical_var_list=df.select_dtypes(exclude=["object"])
+        corr_df = df.corr()
+        corrSale_df=pd.DataFrame(corr_df[target_col])
+        corrSale_df.reset_index(inplace=True)
+        corrSale_df.sort_values(by=target_col,ascending=True,inplace=True)
+        corrSale_df.dropna(inplace=True)
+        corrSale_df.columns=["Feature","Pearson_Corr"]
         logging.info(f"Ploting mul_var_plot : Fig1")
         fig1 = px.bar(corrSale_df, y="Feature", x="Pearson_Corr",
                         color="Pearson_Corr",
