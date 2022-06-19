@@ -1,10 +1,14 @@
+import dynamicplot
+
 import pandas as pd
 import dynamicplot
+
 df=pd.read_csv("https://raw.githubusercontent.com/krishnaik06/Advanced-House-Price-Prediction-/master/train.csv")
 dynamicplot.cat_num_var_plot(df,target_col="SalePrice",filename="Graph1",path="Graph1")
 dynamicplot.num_num_var_plot(df,target_col="SalePrice",filename="Graph2",path="Graph2")
 dynamicplot.null_num_var_plot(df,target_col="SalePrice",filename="Graph3",path="Graph3")
 dynamicplot.mul_var_plot(df,target_col="SalePrice",filename="Graph7",path="Graph7")
+
 
 
 df=pd.read_csv("https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv")

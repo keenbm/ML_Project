@@ -42,7 +42,6 @@ def html_handler(input_str,filename,folder_name):
     return None
 
 
-
 def plotly_to_html(fig,filename,folder_name):
     """
     Use : Store Plotly plot HTML file
@@ -64,14 +63,25 @@ def html_create_index(input_str,filename,folder_name):
     """
     Use : Create index file for all the plotly plot
     Return : None
-    """    
-    logging.info(f"html_create_index call to create {folder_name}/{filename}.html")
+    """
+    parent_name=folder_name.split("/")[0]    
+    logging.info(f"html_create_index called to create {folder_name}/{filename}.html and {parent_name}/EDA.html ")
     
+
     try:
+        if os.path.exists(f"{parent_name}/EDA.html"):
+            with open(f"{parent_name}/EDA.html",'a') as file:
+                file.write(f"<li><a href={filename}/{filename}.html>{input_str}</a></li>")
+        else:
+            with open(f"{parent_name}/EDA.html",'a') as file:
+                file.write(f"<h1 align ='center' style='color:red'> Complete EDA </h1>")
+
+
         with open(f"{folder_name}/{filename}.html",'a') as file:
             file.write(f"<h1 align ='center' style='color:red'> {input_str} </h1>")
+            file.write("""<form> <input type="button" value="Go back!" onclick="history.back()"> </form>""")
 
-        for f in os.listdir(folder_name):
+        for f in os.listdir(f"{folder_name}"):
             if f.endswith('.html') and f!=f"{filename}.html":
                 with open(f"{folder_name}/{filename}.html",'a') as file:
                     file.write(f"<li><a href={f}>{f}</a></li>")
@@ -82,6 +92,23 @@ def html_create_index(input_str,filename,folder_name):
         housing = HousingException(e,sys)
         logging.info(housing.error_message) 
 
+    return None
+
+
+def html_create_EDA(path=os.getcwd()):
+    """
+    Use : Create index file for all Type of EDA Graph
+    Return : None
+    """    
+    logging.info(f"html_create_EDA called")
+    with open(f"EDA.html",'a') as file:
+        file.write(f"<h1 align ='center' style='color:red'> Complete EDA </h1>")
+
+    for f in os.listdir(path):
+        if os.path.isdir(f) and f.startswith("Graph"):
+            with open(f"EDA.html",'a') as EDA:
+                EDA.write(f"<li><a href={f}/{f}.html>{f}</a></li>")
+                
     return None
 
 
@@ -96,6 +123,7 @@ def cat_num_var_plot(df,target_col,filename="Graph1",path="Graph1"):
     Categorical Vs. Numerical Target Variable
     Return : None
     """
+    path=f"DynamicPlot/{path}"
     logging.info("cat_num_var_plot : Called")
     if not os.path.exists(path):
         os.makedirs(path) 
@@ -170,6 +198,7 @@ def num_num_var_plot(df,target_col,filename="Graph2",path="Graph2"):
     Return : None
     """
     logging.info("num_num_var_plot : Called")
+    path=f"DynamicPlot/{path}"
     if not os.path.exists(path):
         os.makedirs(path) 
         numerical_var_list=df.select_dtypes(exclude=["object"])
@@ -228,6 +257,7 @@ def null_num_var_plot(df,target_col,filename="Graph3",path="Graph3"):
     Return : None
     """
     logging.info("null_num_var_plot : Called")
+    path=f"DynamicPlot/{path}"
     if not os.path.exists(path):
         os.makedirs(path)
 
@@ -300,6 +330,7 @@ def cat_cat_var_plot(df,target_col,filename="Graph4",path="Graph4"):
     Return : None
     """
     logging.info("cat_cat_var_plot : Called")
+    path=f"DynamicPlot/{path}"
     if not os.path.exists(path):
         os.makedirs(path) 
     categorical_var_list=df.select_dtypes(include=["object"])
@@ -364,6 +395,9 @@ def num_cat_var_plot(df,target_col,filename="Graph5",path="Graph5"):
     Return : None
     """
     logging.info("num_cat_var_plot : Called")
+
+    path=f"DynamicPlot/{path}"
+    
     if not os.path.exists(path):
         os.makedirs(path) 
     numerical_var_list=df.select_dtypes(exclude=["object"])
@@ -434,6 +468,8 @@ def null_cat_var_plot(df,target_col,filename="Graph6",path="Graph6"):
     """
     logging.info("null_cat_var_plot : Called")
 
+    path=f"DynamicPlot/{path}"
+
     if not os.path.exists(path):
         os.makedirs(path)
 
@@ -476,6 +512,7 @@ def mul_var_plot(df,target_col,filename="Graph7",path="Graph7"):
     Return : None
     """
     logging.info("mul_var_plot : Called")
+    path=f"DynamicPlot/{path}"
     if not os.path.exists(path):
         os.makedirs(path) 
 
