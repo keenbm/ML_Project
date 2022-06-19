@@ -322,7 +322,7 @@ def cat_cat_var_plot(df,target_col,filename="Graph4",path="Graph4"):
                 logging.info(housing.error_message)
 
             try:
-                logging.info(f"Ploting cat_cat_var_plot : Fig3 for {column}")
+                logging.info(f"Ploting cat_cat_var_plot : Fig2 for {column}")
                 inp_df=df.groupby([target_col,column])[[target_col]].count().rename(columns={target_col:f"{target_col}_count"})
                 inp_df=inp_df.reset_index()
                 fig2 = px.bar(inp_df, x=target_col, 
