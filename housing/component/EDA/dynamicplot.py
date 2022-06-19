@@ -299,43 +299,61 @@ def cat_cat_var_plot(df,target_col,filename="Graph4",path="Graph4"):
     Categorical Vs. Categorical Target Variable
     Return : None
     """
-
+    logging.info("cat_cat_var_plot : Called")
     if not os.path.exists(path):
         os.makedirs(path) 
     categorical_var_list=df.select_dtypes(include=["object"])
 
+    try:
+        for column in categorical_var_list:
+            html_handler(input_str=column,filename=column,folder_name=path)
+            inp_df=df.groupby(column)[target_col].count().reset_index(name=f'{column} : Count')
+            
+            try:
+                logging.info(f"Ploting cat_cat_var_plot : Fig1 for {column}")
+                fig1 = px.bar(inp_df, x=column, y=f'{column} : Count',color=column,
+                        barmode="group",title=f'{column} : Count Plot')
+                fig1=fig1.update_layout(title_x=0.5,
+                                        title_font_family="Times New Roman",
+                                        title_font_color="black",title_font_size=20)       
+                plotly_to_html(fig=fig1,filename=column,folder_name=path)
+            except Exception as e:
+                housing = HousingException(e,sys)
+                logging.info(housing.error_message)
 
-    for column in categorical_var_list:
-        html_handler(input_str=column,filename=column,folder_name=path)
-        
-        inp_df=df.groupby(column)[target_col].count().reset_index(name=f'{column} : Count')
-        fig1 = px.bar(inp_df, x=column, y=f'{column} : Count',color=column,
-                barmode="group",title=f'{column} : Count Plot')
-        fig1=fig1.update_layout(title_x=0.5,
-                                title_font_family="Times New Roman",
-                                title_font_color="black",title_font_size=20)       
-        plotly_to_html(fig=fig1,filename=column,folder_name=path)
+            try:
+                logging.info(f"Ploting cat_cat_var_plot : Fig3 for {column}")
+                inp_df=df.groupby([target_col,column])[[target_col]].count().rename(columns={target_col:f"{target_col}_count"})
+                inp_df=inp_df.reset_index()
+                fig2 = px.bar(inp_df, x=target_col, 
+                                y=f'{target_col}_count',color=column,
+                                barmode="group",title=f'{column} :Stacked Count Plot')
+                fig2=fig2.update_layout(title_x=0.5,title_font_family="Times New Roman",
+                                        title_font_color="black",title_font_size=20)
+                plotly_to_html(fig=fig2,filename=column,folder_name=path)
+            except Exception as e:
+                housing = HousingException(e,sys)
+                logging.info(housing.error_message)
 
+            try:
+                logging.info(f"Ploting cat_cat_var_plot : Fig3 for {column}")
+                inp_df=df.groupby(column)[target_col].count().reset_index(name=f'{column} : Count')
+                fig3=px.pie(inp_df, values=f'{column} : Count', names=column, title=f'{column} : Pie Chart')
+                fig3=fig3.update_traces(textposition='inside', textinfo='percent+label')
+                fig3=fig3.update_layout(title_x=0.5,title_font_family="Times New Roman",title_font_color="black",
+                            title_font_size=20)
+                plotly_to_html(fig=fig3,filename=column,folder_name=path)
+            except Exception as e:
+                housing = HousingException(e,sys)
+                logging.info(housing.error_message)            
 
-        inp_df=df.groupby([target_col,column])[[target_col]].count().rename(columns={target_col:f"{target_col}_count"})
-        inp_df=inp_df.reset_index()
-        fig2 = px.bar(inp_df, x=target_col, 
-                        y=f'{target_col}_count',color=column,
-                        barmode="group",title=f'{column} :Stacked Count Plot')
-        fig2=fig2.update_layout(title_x=0.5,title_font_family="Times New Roman",
-                                title_font_color="black",title_font_size=20)
-        plotly_to_html(fig=fig2,filename=column,folder_name=path)
-
-
-        inp_df=df.groupby(column)[target_col].count().reset_index(name=f'{column} : Count')
-        fig3=px.pie(inp_df, values=f'{column} : Count', names=column, title=f'{column} : Pie Chart')
-        fig3=fig3.update_traces(textposition='inside', textinfo='percent+label')
-        fig3=fig3.update_layout(title_x=0.5,title_font_family="Times New Roman",title_font_color="black",
-                    title_font_size=20)
-        plotly_to_html(fig=fig3,filename=column,folder_name=path)
+    except Exception as e:
+                housing = HousingException(e,sys)
+                logging.info(housing.error_message)
 
     html_create_index(input_str="Categorical Variable Analysis",filename="Graph4",folder_name=path)
-
+    logging.info(f"cat_cat_var_plot : Index {path}/{filename}.html Created")
+    return None
 
 ## ******Numerical Vs. Categorical Target variable
 
@@ -345,47 +363,67 @@ def num_cat_var_plot(df,target_col,filename="Graph5",path="Graph5"):
     Numerical Vs. Categorical Target Variable
     Return : None
     """
-
+    logging.info("num_cat_var_plot : Called")
     if not os.path.exists(path):
         os.makedirs(path) 
-
     numerical_var_list=df.select_dtypes(exclude=["object"])
 
+    try:
+        for column in numerical_var_list:
+            
+            html_handler(input_str=column,filename=column,folder_name=path)
+            try:
+                logging.info(f"Ploting num_cat_var_plot : Fig1 for {column}")
+                fig1=px.histogram(df, x=column,marginal="violin",
+                                    hover_data=df.columns,title=f'{column} : Histogram Plot')
+                fig1=fig1.update_layout(title_x=0.5,title_font_family="Times New Roman",
+                                        title_font_color="black",title_font_size=20)        
+                plotly_to_html(fig=fig1,filename=column,folder_name=path)
+            except Exception as e:
+                housing = HousingException(e,sys)
+                logging.info(housing.error_message)
 
-    for column in numerical_var_list:
-        
-        html_handler(input_str=column,filename=column,folder_name=path)
-        
-        fig1=px.histogram(df, x=column,marginal="violin",
-                            hover_data=df.columns,title=f'{column} : Histogram Plot')
-        fig1=fig1.update_layout(title_x=0.5,title_font_family="Times New Roman",
-                                title_font_color="black",title_font_size=20)        
-        plotly_to_html(fig=fig1,filename=column,folder_name=path)
-
-
-
-        fig2=px.violin(df, y=column, points='all', box=True,title=f'{column} : Violin Plot')
-        fig2=fig2.update_layout(title_x=0.5,title_font_family="Times New Roman",
-                        title_font_color="black",title_font_size=20)
-        plotly_to_html(fig=fig2,filename=column,folder_name=path)
-
-
-
-        fig3=px.violin(df, x=target_col,y=column,color=target_col, points='all', box=True,title=f'{column} : Violin Plot')
-        fig3=fig3.update_layout(title_x=0.5,title_font_family="Times New Roman",
-                        title_font_color="black",title_font_size=20)        
-        plotly_to_html(fig=fig3,filename=column,folder_name=path)
-
-
-        inp_df=df.groupby(target_col)[column].agg(["mean","median"]).reset_index().rename(columns={'mean': f'Mean : {column}','median':f'Median : {column}'})
-        fig4 = px.bar(inp_df, x=target_col, y=[f'Mean : {column}',f'Median : {column}'],
-                barmode="group",title=f'{column} : Mean Plot')
-        fig4=fig4.update_layout(title_x=0.5,title_font_family="Times New Roman",
+            try:
+                logging.info(f"Ploting num_cat_var_plot : Fig2 for {column}")
+                fig2=px.violin(df, y=column, points='all', box=True,title=f'{column} : Violin Plot')
+                fig2=fig2.update_layout(title_x=0.5,title_font_family="Times New Roman",
                                 title_font_color="black",title_font_size=20)
-        plotly_to_html(fig=fig4,filename=column,folder_name=path)  
+                plotly_to_html(fig=fig2,filename=column,folder_name=path)
+            except Exception as e:
+                housing = HousingException(e,sys)
+                logging.info(housing.error_message)
 
+            try:
+                logging.info(f"Ploting num_cat_var_plot : Fig3 for {column}")
+                fig3=px.violin(df, x=target_col,y=column,color=target_col, points='all', box=True,title=f'{column} : Violin Plot')
+                fig3=fig3.update_layout(title_x=0.5,title_font_family="Times New Roman",
+                                title_font_color="black",title_font_size=20)        
+                plotly_to_html(fig=fig3,filename=column,folder_name=path)
+            except Exception as e:
+                housing = HousingException(e,sys)
+                logging.info(housing.error_message)
+
+            try:
+                logging.info(f"Ploting num_cat_var_plot : Fig4 for {column}")
+                inp_df=df.groupby(target_col)[column].agg(["mean","median"]).reset_index().rename(columns={'mean': f'Mean : {column}','median':f'Median : {column}'})
+                fig4 = px.bar(inp_df, x=target_col, y=[f'Mean : {column}',f'Median : {column}'],
+                        barmode="group",title=f'{column} : Mean Plot')
+                fig4=fig4.update_layout(title_x=0.5,title_font_family="Times New Roman",
+                                        title_font_color="black",title_font_size=20)
+                plotly_to_html(fig=fig4,filename=column,folder_name=path) 
+            except Exception as e:
+                housing = HousingException(e,sys)
+                logging.info(housing.error_message)
+
+    except Exception as e:
+                housing = HousingException(e,sys)
+                logging.info(housing.error_message)
+    
     html_create_index(input_str="Numerical Variable Analysis",filename="Graph5",folder_name=path)
+    logging.info(f"num_cat_var_plot : Index {path}/{filename}.html Created")
 
+    return None
+    
 
 ## ******Null Vs. Categorical Target variable
 def null_cat_var_plot(df,target_col,filename="Graph6",path="Graph6"):
@@ -394,29 +432,39 @@ def null_cat_var_plot(df,target_col,filename="Graph6",path="Graph6"):
     Null Vs. Categorical Target Variable
     Return : None
     """
+    logging.info("null_cat_var_plot : Called")
+
     if not os.path.exists(path):
         os.makedirs(path)
 
     null_var_list=df.columns[df.isnull().any()].tolist()
     null_var_list.append(target_col)
     null_df=df[null_var_list]
+    try:
+        for column in null_df.iloc[:,:-1]:
+            
+            html_handler(input_str=column,filename=column,folder_name=path)
 
-    for column in null_df.iloc[:,:-1]:
-        
-        html_handler(input_str=column,filename=column,folder_name=path)
+            null_df[column]=np.where(null_df[column].isnull(),"Null","Not Null")
+            inp_df=null_df.groupby(column)[target_col].count().reset_index()
 
-        null_df[column]=np.where(null_df[column].isnull(),"Null","Not Null")
-        inp_df=null_df.groupby(column)[target_col].count().reset_index()
+            try:
+                logging.info(f"Ploting null_cat_var_plot : Fig1 for {column}")
+                fig1 = px.bar(inp_df, x=column, y=target_col,color=column,
+                                barmode="group",title=f'{column} : Null Value Count Plot')
+                fig1=fig1.update_layout(title_x=0.5,title_font_family="Times New Roman",
+                                title_font_color="black", title_font_size=15)
+                plotly_to_html(fig=fig1,filename=column,folder_name=path)
+            except Exception as e:
+                    housing = HousingException(e,sys)
+                    logging.info(housing.error_message)
 
-
-        fig1 = px.bar(inp_df, x=column, y=target_col,color=column,
-                        barmode="group",title=f'{column} : Null Value Count Plot')
-        fig1=fig1.update_layout(title_x=0.5,title_font_family="Times New Roman",
-                        title_font_color="black", title_font_size=15)
-        plotly_to_html(fig=fig1,filename=column,folder_name=path)
-
+    except Exception as e:
+                    housing = HousingException(e,sys)
+                    logging.info(housing.error_message)
+    
     html_create_index(input_str="Null Value Analysis",filename="Graph6",folder_name=path)
-
+    logging.info(f"null_cat_var_plot : Index {path}/{filename}.html Created")
 
 ##*****************************************************************************************  
 ## ************************* Multivariate Analysis ************************
@@ -442,6 +490,7 @@ def mul_var_plot(df,target_col,filename="Graph7",path="Graph7"):
     corrSale_df.columns=["Feature","Pearson_Corr"]
 
     try:
+        logging.info(f"Ploting mul_var_plot : Fig1")
         fig1 = px.bar(corrSale_df, y="Feature", x="Pearson_Corr",
                         color="Pearson_Corr",
                         barmode="group",
@@ -456,6 +505,7 @@ def mul_var_plot(df,target_col,filename="Graph7",path="Graph7"):
         logging.info(housing.error_message)
 
     try:
+        logging.info(f"Ploting mul_var_plot : Fig2")
         fig2=px.imshow(corr_df, text_auto=True, 
                         aspect="auto",
                         title=f'Correlation Plot-2 : Target Variable {target_col}')
