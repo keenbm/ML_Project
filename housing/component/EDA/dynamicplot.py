@@ -25,7 +25,6 @@ def convert_dtype(input_df,input_dict):
     return output_df
 
 
-
 def html_handler(input_str,filename,folder_name):
     """
     Use : Create / Update HTML file
@@ -94,22 +93,6 @@ def html_create_index(input_str,filename,folder_name):
 
     return None
 
-
-def html_create_EDA(path=os.getcwd()):
-    """
-    Use : Create index file for all Type of EDA Graph
-    Return : None
-    """    
-    logging.info(f"html_create_EDA called")
-    with open(f"EDA.html",'a') as file:
-        file.write(f"<h1 align ='center' style='color:red'> Complete EDA </h1>")
-
-    for f in os.listdir(path):
-        if os.path.isdir(f) and f.startswith("Graph"):
-            with open(f"EDA.html",'a') as EDA:
-                EDA.write(f"<li><a href={f}/{f}.html>{f}</a></li>")
-                
-    return None
 
 
 ##*****************************************************************************************  
@@ -554,3 +537,5 @@ def mul_var_plot(df,target_col,filename="Graph7",path="Graph7"):
     except Exception as e:
         housing = HousingException(e,sys)
         logging.info(housing.error_message)
+        
+    html_create_index(input_str="Multivariate Analysis : Target Variable",filename="Graph7",folder_name=path)
