@@ -3,4 +3,10 @@ gunicorn
 sklearn
 pandas
 numpy
+plotly.express
+plotly
+matplotlib
+seaborn
+sweetviz
+pandas_profiling
 -e .

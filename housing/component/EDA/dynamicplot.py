@@ -75,6 +75,7 @@ def html_create_index(input_str,filename,folder_name):
         else:
             with open(f"{parent_name}/EDA.html",'a') as file:
                 file.write(f"<h1 align ='center' style='color:red'> Complete EDA </h1>")
+                file.write(f"<li><a href={filename}/{filename}.html>{input_str}</a></li>")
 
 
         with open(f"{folder_name}/{filename}.html",'a') as file:
@@ -84,7 +85,8 @@ def html_create_index(input_str,filename,folder_name):
         for f in os.listdir(f"{folder_name}"):
             if f.endswith('.html') and f!=f"{filename}.html":
                 with open(f"{folder_name}/{filename}.html",'a') as file:
-                    file.write(f"<li><a href={f}>{f}</a></li>")
+                    f_href=f.replace(" ","%20")
+                    file.write(f"<li><a href={f_href}>{f}</a></li>")
             else:
                 pass
 
@@ -112,7 +114,6 @@ def cat_num_var_plot(df,target_col,filename="Graph1",path="Graph1"):
     if not os.path.exists(path):
         os.makedirs(path) 
 
-
     try:
         categorical_var_list=df.select_dtypes(include=["object"])
         for column in categorical_var_list:
@@ -127,8 +128,7 @@ def cat_num_var_plot(df,target_col,filename="Graph1",path="Graph1"):
                                         title_font_color="black",title_font_size=20)
                 plotly_to_html(fig=fig1,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
                  
            
             try:
@@ -139,8 +139,7 @@ def cat_num_var_plot(df,target_col,filename="Graph1",path="Graph1"):
                                 title_font_size=20)
                 plotly_to_html(fig=fig2,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting cat_num_var_plot : Fig3 for {column}")
@@ -151,8 +150,7 @@ def cat_num_var_plot(df,target_col,filename="Graph1",path="Graph1"):
                                 title_font_size=20)
                 plotly_to_html(fig=fig3,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting cat_num_var_plot : Fig4 for {column}")
@@ -163,12 +161,10 @@ def cat_num_var_plot(df,target_col,filename="Graph1",path="Graph1"):
                         title_font_size=20)
                 plotly_to_html(fig=fig4,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
     except Exception as e:
-        housing = HousingException(e,sys)
-        logging.info(housing.error_message)
+        logging.exception(str(e))
 
     html_create_index(input_str="Categorical Variable Analysis",filename="Graph1",folder_name=path)
     logging.info(f"cat_num_var_plot : Index {path}/{filename}.html Created")
@@ -200,8 +196,7 @@ def num_num_var_plot(df,target_col,filename="Graph2",path="Graph2"):
                                         title_font_color="black",title_font_size=20)
                 plotly_to_html(fig=fig1,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting num_num_var_plot : Fig2 for {column}")
@@ -210,8 +205,7 @@ def num_num_var_plot(df,target_col,filename="Graph2",path="Graph2"):
                                 title_font_color="black",title_font_size=20)
                 plotly_to_html(fig=fig2,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting num_num_var_plot : Fig3 for {column}")
@@ -221,12 +215,10 @@ def num_num_var_plot(df,target_col,filename="Graph2",path="Graph2"):
                                 title_font_color="black",title_font_size=20)
                 plotly_to_html(fig=fig3,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
     
     except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
     html_create_index(input_str="Numerical Variable Analysis",filename="Graph2",folder_name=path)
     logging.info(f"num_num_var_plot : Index {path}/{filename}.html Created")
@@ -268,8 +260,7 @@ def null_num_var_plot(df,target_col,filename="Graph3",path="Graph3"):
                                         title_font_color="black", title_font_size=15)
                 plotly_to_html(fig=fig1,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
 
             try:
@@ -280,8 +271,7 @@ def null_num_var_plot(df,target_col,filename="Graph3",path="Graph3"):
                             title_font_size=15)
                 plotly_to_html(fig=fig2,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting null_num_var_plot : Fig3 for {column}")
@@ -291,18 +281,63 @@ def null_num_var_plot(df,target_col,filename="Graph3",path="Graph3"):
                             title_font_size=15)
                 plotly_to_html(fig=fig3,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
                 
     except Exception as e:
-            housing = HousingException(e,sys)
-            logging.info(housing.error_message)
+                logging.exception(str(e))
         
     html_create_index(input_str="Null Value Analysis",filename="Graph3",folder_name=path)
     logging.info(f"cat_num_var_plot : Index {path}/{filename}.html Created")
 
     return None
 
+## ******Date Vs. Numerical Target variable
+def temporal_num_var_plot(df,target_col,temporal_var_list,filename="Graph10",path="Graph10"):
+    """
+    Use : Create HTML Plot file for Temporal(Date/Time) Vs. Numerical Target Variable
+    and combine it with overall EDA graph HTML
+    Return : None
+    """
+    path=f"DynamicPlot/{path}"
+    logging.info("temporal_num_var_plot : Called")
+    if not os.path.exists(path):
+        os.makedirs(path) 
+
+    try:
+        for column in temporal_var_list:
+            html_handler(input_str=column,filename=column,folder_name=path)
+            inp_df=df.groupby(column)[target_col].agg(['mean','median','count']).reset_index().rename(columns={'mean': f'Mean : {target_col}','median':f'Median : {target_col}','count':f'{column} : Count'})
+
+            try:
+                logging.info(f"Ploting temporal_num_var_plot : Fig1 for {column}")
+                fig1 = px.line(inp_df, x=column, y=[f'Mean : {target_col}',f'Median : {target_col}'])
+                fig1=fig1.update_layout(title_x=0.5,
+                                        title_font_family="Times New Roman",
+                                        title_font_color="black",
+                                        title_font_size=20)
+                plotly_to_html(fig=fig1,filename=column,folder_name=path)
+            except Exception as e:
+                logging.exception(str(e))
+                 
+           
+            try:
+                logging.info(f"Ploting temporal_cat_var_plot : Fig2 for {column}")
+                fig2 = px.bar(inp_df, x=column, y=f'{column} : Count')
+                fig2=fig2.update_layout(title_x=0.5,
+                                        title_font_family="Times New Roman",
+                                        title_font_color="black",
+                                        title_font_size=20)
+                
+                plotly_to_html(fig=fig2,filename=column,folder_name=path)
+            except Exception as e:
+                logging.exception(str(e))
+
+    except Exception as e:
+        logging.exception(str(e))
+
+    html_create_index(input_str="Temporal(Date/Time) Variable Analysis",filename="Graph10",folder_name=path)
+    logging.info(f"temporal_num_var_plot : Index {path}/{filename}.html Created")
+    return None
 
 ##*****************************************************************************************  
 ## ************************* Function for Categorical Target Variavble ************************
@@ -336,8 +371,7 @@ def cat_cat_var_plot(df,target_col,filename="Graph4",path="Graph4"):
                                         title_font_color="black",title_font_size=20)       
                 plotly_to_html(fig=fig1,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting cat_cat_var_plot : Fig2 for {column}")
@@ -350,8 +384,7 @@ def cat_cat_var_plot(df,target_col,filename="Graph4",path="Graph4"):
                                         title_font_color="black",title_font_size=20)
                 plotly_to_html(fig=fig2,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting cat_cat_var_plot : Fig3 for {column}")
@@ -362,12 +395,10 @@ def cat_cat_var_plot(df,target_col,filename="Graph4",path="Graph4"):
                             title_font_size=20)
                 plotly_to_html(fig=fig3,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)            
+                logging.exception(str(e))            
 
     except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
     html_create_index(input_str="Categorical Variable Analysis",filename="Graph4",folder_name=path)
     logging.info(f"cat_cat_var_plot : Index {path}/{filename}.html Created")
@@ -402,8 +433,7 @@ def num_cat_var_plot(df,target_col,filename="Graph5",path="Graph5"):
                                         title_font_color="black",title_font_size=20)        
                 plotly_to_html(fig=fig1,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting num_cat_var_plot : Fig2 for {column}")
@@ -412,8 +442,7 @@ def num_cat_var_plot(df,target_col,filename="Graph5",path="Graph5"):
                                 title_font_color="black",title_font_size=20)
                 plotly_to_html(fig=fig2,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting num_cat_var_plot : Fig3 for {column}")
@@ -422,8 +451,7 @@ def num_cat_var_plot(df,target_col,filename="Graph5",path="Graph5"):
                                 title_font_color="black",title_font_size=20)        
                 plotly_to_html(fig=fig3,filename=column,folder_name=path)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting num_cat_var_plot : Fig4 for {column}")
@@ -434,12 +462,10 @@ def num_cat_var_plot(df,target_col,filename="Graph5",path="Graph5"):
                                         title_font_color="black",title_font_size=20)
                 plotly_to_html(fig=fig4,filename=column,folder_name=path) 
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
     except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
     
     html_create_index(input_str="Numerical Variable Analysis",filename="Graph5",folder_name=path)
     logging.info(f"num_cat_var_plot : Index {path}/{filename}.html Created")
@@ -481,15 +507,52 @@ def null_cat_var_plot(df,target_col,filename="Graph6",path="Graph6"):
                                 title_font_color="black", title_font_size=15)
                 plotly_to_html(fig=fig1,filename=column,folder_name=path)
             except Exception as e:
-                    housing = HousingException(e,sys)
-                    logging.info(housing.error_message)
+                logging.exception(str(e))
 
     except Exception as e:
-                    housing = HousingException(e,sys)
-                    logging.info(housing.error_message)
+                logging.exception(str(e))
     
     html_create_index(input_str="Null Value Analysis",filename="Graph6",folder_name=path)
     logging.info(f"null_cat_var_plot : Index {path}/{filename}.html Created")
+
+
+## ******Date Vs. Categorical Target variable
+def temporal_cat_var_plot(df,target_col,temporal_var_list,filename="Graph11",path="Graph11"):
+    """
+    Use : Create HTML Plot file for Temporal(Date/Time) Vs. Categorical Target Variable
+    and combine it with overall EDA graph HTML
+    Return : None
+    """
+    path=f"DynamicPlot/{path}"
+    logging.info("temporal_cat_var_plot : Called")
+    if not os.path.exists(path):
+        os.makedirs(path) 
+
+    try:
+        for column in temporal_var_list:
+            html_handler(input_str=column,filename=column,folder_name=path)
+            inp_df=df.groupby([column,target_col])[target_col].agg('count').reset_index(name=f'{column} : Count')
+               
+           
+            try:
+                logging.info(f"Ploting temporal_cat_var_plot : Fig1 for {column}")
+                fig2 = px.bar(inp_df, x=column, y=f'{column} : Count',color=target_col)
+                fig2=fig2.update_layout(title_x=0.5,
+                                        title_font_family="Times New Roman",
+                                        title_font_color="black",
+                                        title_font_size=20)
+                
+                plotly_to_html(fig=fig2,filename=column,folder_name=path)
+            except Exception as e:
+                logging.exception(str(e))
+
+    except Exception as e:
+        logging.exception(str(e))
+
+    html_create_index(input_str="Temporal(Date/Time) Variable Analysis",filename="Graph11",folder_name=path)
+    logging.info(f"temporal_cat_var_plot : Index {path}/{filename}.html Created")
+    return None
+
 
 ##*****************************************************************************************  
 ## ************************* Multivariate Analysis ************************
@@ -528,8 +591,7 @@ def mul_var_plot(df,target_col,filename="Graph7",path="Graph7"):
                                 title_font_size=20)
         plotly_to_html(fig=fig1,filename=filename,folder_name=path)
     except Exception as e:
-        housing = HousingException(e,sys)
-        logging.info(housing.error_message)
+                logging.exception(str(e))
 
     try:
         logging.info(f"Ploting mul_var_plot : Fig2")
@@ -542,8 +604,7 @@ def mul_var_plot(df,target_col,filename="Graph7",path="Graph7"):
                             title_font_size=20)
         plotly_to_html(fig=fig2,filename=filename,folder_name=path)
     except Exception as e:
-        housing = HousingException(e,sys)
-        logging.info(housing.error_message)
+                logging.exception(str(e))
 
     html_create_index(input_str="Multivariate Analysis : Target Variable",filename="Graph7",folder_name=path)
 
@@ -565,7 +626,7 @@ def SweetViz_report(df,target_col,filename="Graph8",path="Graph8"):
     
     try:
         logging.info("Creating SweetViz Report")
-        logging.info("Creating SweetViz Report")
+        #html_handler(input_str="SweetViz Report",filename="SweetViz",folder_name=path)
         my_report=sv.analyze(df,target_feat=target_col,feat_cfg=None)
         my_report.show_html(f"{path}/{filename}.html",open_browser=False)
         html_create_index(input_str="SweetViz Report",filename=filename,folder_name=path)
@@ -575,8 +636,8 @@ def SweetViz_report(df,target_col,filename="Graph8",path="Graph8"):
         # Comparing two subsets of the same dataframe (i.e. Male vs Female)
         #  my_report = sv.compare_intra()
     except Exception as e:
-        housing = HousingException(e,sys)
-        logging.info(housing.error_message)
+                logging.exception(str(e))
+    return None
 
 
 def PandaProfile_report(df,target_col,filename="Graph9",path="Graph9",minimal_ip=False):
@@ -594,10 +655,11 @@ def PandaProfile_report(df,target_col,filename="Graph9",path="Graph9",minimal_ip
     
     try:
         logging.info("Creating PandaProfiling Report")
+        #html_handler(input_str="PandaProfiling Report",filename="PandaProfiling",folder_name=path)
         profile = pp.ProfileReport(df,title="PandaProfiling Report",explorative=True,minimal=minimal_ip)
         # minimal=True -->> For Big Dataset
         profile.to_file(f"{path}/{filename}.html")
         html_create_index(input_str="PandaProfiling Report",filename=filename,folder_name=path)
     except Exception as e:
-        housing = HousingException(e,sys)
-        logging.info(housing.error_message)
+        logging.exception(str(e))
+    return None

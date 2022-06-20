@@ -88,8 +88,7 @@ def cat_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 for p in ax1.patches:
                     ax1.annotate('{:.0f}'.format(p.get_height()),(p.get_x()+0.2, p.get_height()+2))
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting cat_num_var_plot : ax2 for {column}")
@@ -99,8 +98,7 @@ def cat_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                             order = df[column].value_counts().index,ax=ax2)
                 plt.xticks(rotation=90)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting cat_num_var_plot : ax3 for {column}")      
@@ -108,8 +106,7 @@ def cat_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 df[column].value_counts().plot.pie(autopct = "%2.2f%%", ax=ax3)
                 ax3.set_title(column.upper() + ' : Pie Plot')
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             work_figure.tight_layout()
             #plt.show()
@@ -118,8 +115,7 @@ def cat_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
              
 
     except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
     graph_pdf.close()
 
@@ -162,8 +158,7 @@ def num_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 ax1.set_title(column.upper()+': Density Plot')
                 sns.distplot(df[column],ax = ax1)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
 
             try:
@@ -172,8 +167,7 @@ def num_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 plt.hist(data = df,x=column)
                 plt.title(column.upper()+' : Histogram',ax = ax2)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message) 
+                logging.exception(str(e)) 
 
 
             try:
@@ -182,8 +176,7 @@ def num_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 sns.boxplot(df[column], ax=ax3)
                 plt.title(column.upper() + " : Box Plot")
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message) 
+                logging.exception(str(e))
 
 
             try:
@@ -198,8 +191,7 @@ def num_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                         verticalalignment='center',
                         transform = ax4.transAxes,color='b', weight='bold',fontsize = 15)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             work_figure.tight_layout() 
             # plt.show()
@@ -207,8 +199,7 @@ def num_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
             graph_pdf.savefig(work_figure)
 
     except Exception as e:
-        housing = HousingException(e,sys)
-        logging.info(housing.error_message)
+        logging.exception(str(e))
 
     graph_pdf.close()
     return None
@@ -255,8 +246,7 @@ def null_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                     for p in ax1.patches:
                         ax1.annotate('{:.0f}'.format(p.get_height()),(p.get_x()+0.2, p.get_height()+2))
                 except Exception as e:
-                    housing = HousingException(e,sys)
-                    logging.info(housing.error_message)
+                    logging.exception(str(e))
 
 
                 try:
@@ -267,8 +257,7 @@ def null_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                     for p in ax2.patches:
                         ax2.annotate('{:.0f}'.format(p.get_height()),(p.get_x()+0.2, p.get_height()+2))
                 except Exception as e:
-                    housing = HousingException(e,sys)
-                    logging.info(housing.error_message)
+                    logging.exception(str(e))
 
                 try:
                     logging.info(f"Ploting null_num_var_plot : ax3 for {column}")
@@ -278,8 +267,7 @@ def null_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                     for p in ax3.patches:
                         ax3.annotate('{:.0f}'.format(p.get_height()),(p.get_x()+0.2, p.get_height()+2))
                 except Exception as e:
-                    housing = HousingException(e,sys)
-                    logging.info(housing.error_message)
+                    logging.exception(str(e))
 
                 try:
                     logging.info(f"Ploting null_num_var_plot : ax4 for {column}")
@@ -291,8 +279,7 @@ def null_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                             verticalalignment='center',
                             transform = ax4.transAxes,color='b', weight='bold',fontsize = 15)  
                 except Exception as e:
-                    housing = HousingException(e,sys)
-                    logging.info(housing.error_message)
+                    logging.exception(str(e))
 
                 work_figure.tight_layout(pad=10, w_pad=10, h_pad=10.0)
                 #plt.show()
@@ -300,8 +287,7 @@ def null_num_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 graph_pdf.savefig(work_figure)
 
     except Exception as e:
-        housing = HousingException(e,sys)
-        logging.info(housing.error_message)
+        logging.exception(str(e))
 
     graph_pdf.close()
     return None
@@ -355,8 +341,7 @@ def cat_cat_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 for p in ax1.patches:
                     ax1.annotate('{:.0f}'.format(p.get_height()),(p.get_x()+0.2, p.get_height()+2))
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                    logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting cat_cat_var_plot : ax2 for {column}")
@@ -371,8 +356,7 @@ def cat_cat_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 #df_plot.plot(kind='bar', stacked=True,ax = ax2)
                 plt.xticks(rotation=90)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
 
             try: 
@@ -381,8 +365,7 @@ def cat_cat_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 df[column].value_counts().plot.pie(autopct = "%2.2f%%", ax=ax3)
                 ax3.set_title(column.upper() + ' : Pie Plot')
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             work_figure.tight_layout()
             #plt.show()
@@ -390,8 +373,7 @@ def cat_cat_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
             graph_pdf.savefig(work_figure)
 
     except Exception as e:
-        housing = HousingException(e,sys)
-        logging.info(housing.error_message)
+        logging.exception(str(e))
 
     graph_pdf.close()
 
@@ -433,8 +415,7 @@ def num_cat_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 ax1.set_title(column.upper()+': Density Plot')
                 sns.distplot(df[column],ax = ax1)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message) 
+                logging.exception(str(e))
 
 
             try:
@@ -443,8 +424,7 @@ def num_cat_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 plt.hist(data = df,x=column)
                 plt.title(column.upper()+' : Histogram',ax = ax2)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting num_cat_var_plot : ax3 for {column}")
@@ -452,8 +432,7 @@ def num_cat_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 sns.boxplot(df[column], ax=ax3)
                 plt.title(column.upper() + " : Box Plot")
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting num_cat_var_plot : ax4 for {column}")
@@ -463,8 +442,7 @@ def num_cat_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                             order = df[target_col].value_counts().index,ax=ax4)
                 plt.xticks(rotation=90)
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             work_figure.tight_layout() 
             #plt.show()
@@ -472,8 +450,7 @@ def num_cat_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
             graph_pdf.savefig(work_figure)
 
     except Exception as e:
-        housing = HousingException(e,sys)
-        logging.info(housing.error_message)
+        logging.exception(str(e))
 
     graph_pdf.close()
 
@@ -521,8 +498,7 @@ def null_cat_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                 for p in ax1.patches:
                     ax1.annotate('{:.0f}'.format(p.get_height()),(p.get_x()+0.2, p.get_height()+2))
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting null_cat_var_plot : ax2 for {column}")
@@ -536,24 +512,21 @@ def null_cat_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
                         verticalalignment='center',
                         transform = ax2.transAxes,color='b', weight='bold',fontsize = 15)  
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
 
             try:
                 logging.info(f"Ploting null_cat_var_plot : ax3 for {column}")
                 ax3 = work_figure.add_subplot(grid[1,0])
                 ax3.set_title('Not Applicable')
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
             
             try:
                 logging.info(f"Ploting null_cat_var_plot : ax4 for {column}")
                 ax4 = work_figure.add_subplot(grid[1,1])
                 ax4.set_title('Not Applicable')
             except Exception as e:
-                housing = HousingException(e,sys)
-                logging.info(housing.error_message)
+                logging.exception(str(e))
             
             work_figure.tight_layout(pad=10, w_pad=10, h_pad=10.0)
             #plt.show()
@@ -561,8 +534,7 @@ def null_cat_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
             graph_pdf.savefig(work_figure) #papertype=graphsize
 
     except Exception as e:
-        housing = HousingException(e,sys)
-        logging.info(housing.error_message)
+        logging.exception(str(e))
 
     graph_pdf.close()
 
@@ -607,8 +579,7 @@ def mul_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
         logging.info(f"Saving mul_var_plot-1 in PDF")
         graph_pdf.savefig(work_figure_1) 
     except Exception as e:
-        housing = HousingException(e,sys)
-        logging.info(housing.error_message)
+        logging.exception(str(e))
 
   
     try:
@@ -626,8 +597,7 @@ def mul_var_plot(df,target_col,graphsize="big",plot_style="ggplot"):
         logging.info(f"Saving mul_var_plot-2 in PDF")
         graph_pdf.savefig(work_figure_2)
     except Exception as e:
-        housing = HousingException(e,sys)
-        logging.info(housing.error_message)
+        logging.exception(str(e))
 
     graph_pdf.close()
 
