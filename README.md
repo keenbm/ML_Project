@@ -117,9 +117,37 @@ Housing
 |-entity package
 |  |
 |  |-__init__.py
+|
+|- util
+|   |
+|   |-__init__.py
+|   |- util.py  ## for utility function i.e. read yaml
+|
+|- constant
+|   |
+|   |-__init__.py
+|   |- constant.py ## Store constant i.e. file path etc.
 |_________________
 
 19. First create code for Logger module
 
-20.
+20. Created Code for Exception module
 
+21. Created Configuration = entity --> config_entity.py
+    In this file all configuration path are mention for dataIngestion , datavalidation , datatransformation , train moel , evaluatio data
+    are mentioned
+
+22. Creating Config folder in main directory
+   - Create config.yml file for pipe creation
+   - Basically this file stores file path and Variables name related to pipeline
+
+23. Create : Housing folder > Config folder > Config.python
+    - In this file class and function are written to 
+      get values/path from configuration files (config.yml)
+    -  Here we are importing namedTuple mentioned in "entity --> config_entity.py"
+       And use them along with function to return path name
+
+
+
+
+   Ref : https://github.com/avnyadav/machine_learning_project/tree/main/housing/entity

@@ -10,4 +10,5 @@ seaborn
 sweetviz
 pandas_profiling
 ipykernel
+PyYAML
 -e .
