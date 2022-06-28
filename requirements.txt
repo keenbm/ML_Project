@@ -9,4 +9,5 @@ matplotlib
 seaborn
 sweetviz
 pandas_profiling
+ipykernel
 -e .
