@@ -17,14 +17,22 @@ class HousingException(Exception):
         # ->str : Means function return string type data
         
         
-        _,_ , exec_tb=error_detail.exc_info() ## return most recent exception
-        
-        line_number=exec_tb.tb_frame.f_lineno ## Get error line number
-        file_name=exec_tb.tb_frame.f_code.co_filename ## Get error file name
-
-        error_message=f"Error occured in scrip:[{file_name}] at line number : [{line_number}] error message:[{error_message}]"
-
+        """
+        error_message: Exception object
+        error_detail: object of sys module
+        """
+        _,_ ,exec_tb = error_detail.exc_info()
+        exception_block_line_number = exec_tb.tb_frame.f_lineno
+        try_block_line_number = exec_tb.tb_lineno
+        file_name = exec_tb.tb_frame.f_code.co_filename
+        error_message = f"""
+        Error occured in script: 
+        [ {file_name} ] at 
+        try block line number: [{try_block_line_number}] and exception block line number: [{exception_block_line_number}] 
+        error message: [{error_message}]
+        """
         return error_message
+
 
     def __str__(self):
         return self.error_message
