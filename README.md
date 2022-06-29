@@ -133,19 +133,29 @@ Housing
 
 20. Created Code for Exception module
 
-21. Created Configuration = entity --> config_entity.py
-    In this file all configuration path are mention for dataIngestion , datavalidation , datatransformation , train moel , evaluatio data
+21. Created Configuration = entity --> config_entity.py and artificat_entity.py
+    In this file datastructure are created for logging
+    all type configuration  
+    dataIngestion , datavalidation , datatransformation , train moel , evaluatio data
     are mentioned
 
 22. Creating Config folder in main directory
    - Create config.yml file for pipe creation
    - Basically this file stores file path and Variables name related to pipeline
+   - So we only need to change this file for changing piple line parameter
 
 23. Create : Housing folder > Config folder > Config.python
     - In this file class and function are written to 
       get values/path from configuration files (config.yml)
-    -  Here we are importing namedTuple mentioned in "entity --> config_entity.py"
-       And use them along with function to return path name
+    -  We are using following in this python file :
+       Importing Constant.py
+       Reading config.yml
+       Importing config_entity.py and assigning values to it's datastructure (named tuple) after reading it from config.yml
+
+24. Creating and coding component > data_ingestion.py
+
+25. Create Pipeline > Pipeline.py
+
 
 
 
