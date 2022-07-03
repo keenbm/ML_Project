@@ -156,6 +156,9 @@ Housing
 
 25. Create Pipeline > Pipeline.py
 
+26. Create SCHEMA file in root>Config dir.
+    -- This include each column namd it's dtype
+
 
 
 

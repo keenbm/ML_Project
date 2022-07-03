@@ -13,7 +13,7 @@ DataIngestionConfig=namedtuple("DataIngestionConfig",
 
 # Configuration for DataValidation
 # 6. schema_file_path --> Schema File
-DataValidationConfig = namedtuple("DataValidationConfig", ["schema_file_path"])
+DataValidationConfig = namedtuple("DataValidationConfig",["schema_file_path","report_file_path","report_page_file_path"])
 
 
 # Configuration for DataTransformation
